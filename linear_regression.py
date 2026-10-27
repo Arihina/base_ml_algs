@@ -25,7 +25,7 @@ train, val, test = np.split(df.sample(frac=1), [int(0.6 * len(df)), int(0.8 * le
 
 def get_xy(df, y, x=None):
     df = copy.deepcopy(df)
-    if not x:
+    if x is None:
         x = df[[c for c in df.columns if c != y]].values
     else:
         if len(x) == 1:
@@ -46,8 +46,8 @@ _, x_test_temp, y_test_temp = get_xy(df, "Rented Bike Count", x=["Temperature"])
 temp_reg = LinearRegression()
 temp_reg.fit(x_train_temp, y_train_temp)
 
-# print(temp_reg.coef_, temp_reg.intercept_)
-# print(temp_reg.score(x_test_temp, y_test_temp))
+print(temp_reg.coef_, temp_reg.intercept_)
+print(temp_reg.score(x_test_temp, y_test_temp))
 
 plt.scatter(x_train_temp, y_train_temp, label="Data", color="Blue")
 x = tf.linspace(-20, 40, 100)
@@ -57,3 +57,16 @@ plt.title("Bike vs Temp")
 plt.ylabel("Num of bike")
 plt.xlabel("Temp")
 plt.show()
+
+# Multiple LR
+
+_, x_train_all, y_train_all = get_xy(df, "Rented Bike Count", x=df.columns[1:])
+_, x_val_all, y_val_all = get_xy(df, "Rented Bike Count", x=df.columns[1:])
+_, x_test_all, y_test_all = get_xy(df, "Rented Bike Count", x=df.columns[1:])
+
+all_reg = LinearRegression()
+all_reg.fit(x_train_all, y_train_all)
+
+print(all_reg.coef_, all_reg.intercept_)
+print(all_reg.score(x_test_all, y_test_all))
+
