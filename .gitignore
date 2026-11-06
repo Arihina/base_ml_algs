@@ -1,2 +1,4 @@
 venv
 .idea
+/plots/
+seeds_dataset.txt
